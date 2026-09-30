@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7e6">
+  <meta name="description" content="A playful birthday adventure that turns into a heartfelt note for Saint.">
+  <title>Saint's Birthday Adventure</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231c3158'/%3E%3Cpath d='M32 11c-13 0-20 10-20 21 0 12 9 19 20 19s20-7 20-19c0-11-7-21-20-21Z' fill='%23ff6c73'/%3E%3Cpath d='m32 51-5 6h10z' fill='%23ff6c73'/%3E%3Cpath d='M32 57v6' stroke='%23fff7e6' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-scene="bureau">
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a href="#top" class="brand" id="brandLink">
+      <span class="brand-icon">S<span>✳</span></span>
+      <span>SAINT'S VERY OFFICIAL<br>BIRTHDAY WEBSITE</span>
+    </a>
+    <div class="header-right">
+      <span class="header-disclaimer">ONE DAY ONLY. UNLIMITED NONSENSE.</span>
+      <button type="button" class="reset-button" id="resetButton">Start over</button>
+    </div>
+  </header>
+
+  <div class="music-dock" id="musicDock">
+    <div class="music-settings" id="musicSettings" hidden>
+      <div class="music-settings-head">
+        <strong>YOUR BIRTHDAY SOUNDTRACK</strong>
+        <button type="button" id="closeMusicSettings" aria-label="Close music settings">×</button>
+      </div>
+      <p>Choose an audio file to hear it on this device.</p>
+      <label for="customMusicFile">Choose a song</label>
+      <input id="customMusicFile" type="file" accept="audio/*">
+      <label for="siteMusicVolume">Volume <span id="volumeValue">30%</span></label>
+      <input id="siteMusicVolume" type="range" min="0" max="100" value="30">
+      <button type="button" class="music-default" id="useSiteMusic">Use the site soundtrack</button>
+      <span class="music-preview-status" id="musicPreviewStatus" role="status">Site soundtrack selected.</span>
+      <p class="music-help" id="musicHelp" role="status">To play your song for everyone, replace <strong>background-music.mp3</strong> in the website files and publish them.</p>
+    </div>
+    <div class="music-controls">
+      <button type="button" class="music-toggle" id="siteMusicToggle" aria-label="Play site music" aria-pressed="false">
+        <span aria-hidden="true">♫</span><span id="siteMusicText">Tap to play</span>
+      </button>
+      <button type="button" class="music-settings-toggle" id="openMusicSettings" aria-label="Music settings" aria-expanded="false" aria-controls="musicSettings">⚙</button>
+    </div>
+  </div>
+  <audio id="siteMusic" src="background-music.mp3" preload="auto" loop></audio>
+
+  <div class="chapter-nav-wrap" id="top">
+    <nav class="chapter-nav" aria-label="Birthday chapters">
+      <div class="tab-list" role="tablist" aria-label="Explore Saint's birthday surprise">
+        <button class="chapter-tab active" id="tab-bureau" role="tab" type="button" aria-selected="true" aria-controls="panel-bureau" tabindex="0" data-tab="bureau">
+          <span class="tab-num">01</span><span>The Bureau</span><span class="tab-check" aria-hidden="true">✓</span>
+        </button>
+        <button class="chapter-tab locked" id="tab-balloons" role="tab" type="button" aria-selected="false" aria-disabled="true" aria-controls="panel-balloons" tabindex="-1" data-tab="balloons">
+          <span class="tab-num">02</span><span>Balloon Chaos</span><span class="tab-check" aria-hidden="true">✓</span>
+        </button>
+        <button class="chapter-tab locked" id="tab-gifts" role="tab" type="button" aria-selected="false" aria-disabled="true" aria-controls="panel-gifts" tabindex="-1" data-tab="gifts">
+          <span class="tab-num">03</span><span>Gift Desk</span><span class="tab-check" aria-hidden="true">✓</span>
+        </button>
+        <button class="chapter-tab locked" id="tab-quiet" role="tab" type="button" aria-selected="false" aria-disabled="true" aria-controls="panel-quiet" tabindex="-1" data-tab="quiet">
+          <span class="tab-num">04</span><span>Quiet Corner</span>
+        </button>
+        <button class="chapter-tab locked" id="tab-letter" role="tab" type="button" aria-selected="false" aria-disabled="true" aria-controls="panel-letter" tabindex="-1" data-tab="letter">
+          <span class="tab-num">05</span><span>The Letter</span><span class="tab-lock" id="tabLock" aria-hidden="true">✳</span>
+        </button>
+      </div>
+      <div class="journey-progress" aria-label="Birthday adventure progress">
+        <span id="progressText">0 of 3 chapters cleared</span>
+        <span class="progress-track"><span id="progressFill"></span></span>
+      </div>
+      <p class="chapter-lock-message" id="chapterLockMessage" role="status" hidden>Nice try. Clear all eight Bureau tasks to unlock the other tabs.</p>
+    </nav>
+  </div>
+
+  <main>
+    <section class="tab-panel scene-bureau" id="panel-bureau" role="tabpanel" aria-labelledby="tab-bureau" tabindex="0">
+      <div class="scene-layout intro-layout">
+        <div class="scene-copy">
+          <span class="eyebrow"><span class="eyebrow-dot">✳</span> CHAPTER 01 / BIRTHDAY BUREAU</span>
+          <h1>Please hold.<br>Your birthday is<br><em>being processed.</em></h1>
+          <p>Happy birthday, Saint! Your surprise is ready, but first the extremely unnecessary Birthday Bureau has eight tasks. None of them have been approved by a sensible person.</p>
+          <div class="hand-note"><span aria-hidden="true">↘</span> I PROMISE THIS IS WORTH IT. PROBABLY.</div>
+        </div>
+
+        <div class="bureau-card" aria-live="polite">
+          <div class="bureau-top">
+            <span>CASE FILE: SAINT / 001</span>
+            <span>TOP SECRET*<br><small>*NOT REALLY</small></span>
+          </div>
+          <div class="bureau-meter">
+            <span id="bureauProgress">TASK 1 OF 8</span>
+            <span class="bureau-meter-track"><span id="bureauMeterFill"></span></span>
+          </div>
+
+          <div class="bureau-content">
+            <div class="bureau-step" data-step="0">
+              <span class="bureau-round">HUMAN VERIFICATION / COMMON SENSE</span>
+
+              <div id="humanQuestion">
+                <div class="stamp-mark" aria-hidden="true">?</div>
+                <h2>Are you human?</h2>
+                <p>A task is due in ten minutes. You haven’t started yet.</p>
+                <div class="cake-answers">
+                  <button type="button" class="choice-button choice-outline" data-human-answer="wrong">No</button>
+                  <button type="button" class="choice-button choice-outline" data-human-answer="right">Yes</button>
+                </div>
+                <span id="humanChoiceFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+
+              <div id="humanSure" hidden>
+                <div class="stamp-mark stamp-yellow" aria-hidden="true">?</div>
+                <h2>Are you sure??</h2>
+                <p>Interesting. You claim you are human.The Bureau needs a second confirmation for absolutely no reason.</p>
+                <div class="cake-answers">
+                  <button type="button" class="choice-button choice-outline" data-human-confirm="sure-yes">Yes, unfortunately.</button>
+                  <button type="button" class="choice-button choice-outline" data-human-confirm="sure-no">No, fortunately.</button>
+                </div>
+                <span id="humanSureFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+
+              <div id="humanReallySure" hidden>
+                <div class="stamp-mark stamp-purple" aria-hidden="true">!</div>
+                <h2>Are you really, really sure?</h2>
+                <p>The Bureau has lost your last confirmation. Please confirm that you confirmed the confirmation.</p>
+                <div class="cake-answers">
+                  <button type="button" class="choice-button choice-outline" data-human-confirm="really-no">No.</button>
+                  <button type="button" class="choice-button choice-outline" data-human-confirm="really-yes">Yes. Really, really sure.</button>
+                </div>
+                <span id="humanReallySureFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+            </div>
+
+            <div class="bureau-step" data-step="1" hidden>
+              <span class="bureau-round">HUMAN VERIFICATION / PHOTO CAPTCHA</span>
+              <h2>I'm not a robot.</h2>
+              <p>Oh, you clicked a human answer? Our system still requires the usual box. Then please repair this birthday photo. Tap two squares to swap them.</p>
+              <button type="button" class="robot-check" id="robotCheck" role="checkbox" aria-checked="false">
+                <span class="robot-box" aria-hidden="true"></span>
+                <span>I'm not a robot</span>
+                <span class="robot-mark" aria-hidden="true">✳<small>birthday CAPTCHA</small></span>
+              </button>
+              <div class="puzzle-wrap" id="puzzleWrap" hidden>
+                <div class="puzzle-help">
+                  <img src="birthday-puzzle-photo.jpg" alt="Reference birthday photo" width="75" height="100">
+                  <div>
+                    <strong>Put the photo back together.</strong>
+                    <span>Tap one piece, then another to swap. The tiny photo is your reference.</span>
+                  </div>
+                </div>
+                <div class="puzzle-grid" id="puzzleGrid" aria-label="Birthday photo swap puzzle"></div>
+                <div class="puzzle-actions">
+                  <button type="button" class="choice-button choice-outline" id="puzzleShuffle">Shuffle again</button>
+                  <button type="button" class="choice-button" id="puzzleContinue" disabled>Continue</button>
+                </div>
+                <span class="bureau-feedback" id="puzzleStatus" role="status">The Bureau shredded the photo into 12 pieces. Sorry.</span>
+              </div>
+            </div>
+
+            <div class="bureau-step" data-step="2" hidden>
+              <span class="bureau-round">HUMAN VERIFICATION / VISUAL EXAM</span>
+              <h2>Pick which one is the stairs.</h2>
+              <p>This is the Bureau’s state-of-the-art image test. Please do not confuse stairs with a ladder. Again.</p>
+              <div class="captcha-grid stairs-grid" aria-label="Pick the stairs">
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="elevator" aria-label="Elevator picture" aria-pressed="false"><span aria-hidden="true">🛗</span></button>
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="ladder" aria-label="Ladder picture" aria-pressed="false"><span aria-hidden="true">🪜</span></button>
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="ramp" aria-label="Ramp picture" aria-pressed="false"><span aria-hidden="true">◢</span></button>
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="stairs" aria-label="Steps picture" aria-pressed="false">
+                  <span class="stairs-icon" aria-hidden="true">
+                    <svg viewBox="0 0 80 56"><path d="M7 48h15V37h15V26h15V15h20" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </button>
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="chair" aria-label="Chair picture" aria-pressed="false"><span aria-hidden="true">🪑</span></button>
+                <button type="button" class="captcha-tile stairs-tile" data-stairs="escalator" aria-label="Escalator picture" aria-pressed="false"><span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="bureau-action-row">
+                <button type="button" class="choice-button" id="stairsCheck">Verify my stair knowledge</button>
+                <span id="stairsFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+            </div>
+
+            <div class="bureau-step" data-step="3" hidden>
+              <span class="bureau-round">RONA MAE MALATE VERIFICATION</span>
+              <div class="stamp-mark stamp-purple" aria-hidden="true">R</div>
+              <h2>Are you Rona Mae Malate?</h2>
+              <p>Pick <strong>all</strong> the options that best describe you. The Bureau has been given suspiciously specific information.</p>
+              <div class="captcha-grid rona-grid" aria-label="Rona Mae verification options">
+                <button type="button" class="captcha-tile rona-tile" data-rona="mabaho" aria-pressed="false">nagjowa ng mabaho</button>
+                <button type="button" class="captcha-tile rona-tile" data-rona="ceo" aria-pressed="false">CEO ng Birthday Bureau</button>
+                <button type="button" class="captcha-tile rona-tile" data-rona="kabaong" aria-pressed="false">humiga sa kabaong</button>
+                <button type="button" class="captcha-tile rona-tile" data-rona="taxes" aria-pressed="false">nag-file ng taxes on time</button>
+                <button type="button" class="captcha-tile rona-tile" data-rona="santo" aria-pressed="false">santong nagmumura</button>
+                <button type="button" class="captcha-tile rona-tile" data-rona="raccoon" aria-pressed="false">mysterious raccoon supervisor</button>
+              </div>
+              <div class="bureau-action-row">
+                <button type="button" class="choice-button" id="ronaCheck">Verify Rona Mae</button>
+                <span id="ronaFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+            </div>
+
+            <div class="bureau-step" data-step="4" hidden>
+              <span class="bureau-round">BIRTHDAY CAPTCHA</span>
+              <h2>Prove you know what a birthday is.</h2>
+              <p>Select <strong>everything</strong> that belongs at Saint’s birthday. There may be a trick.</p>
+              <div class="captcha-grid" aria-label="Birthday CAPTCHA">
+                <button type="button" class="captcha-tile" data-captcha="cake" aria-pressed="false"><span aria-hidden="true">🎂</span>Cake</button>
+                <button type="button" class="captcha-tile" data-captcha="balloons" aria-pressed="false"><span aria-hidden="true">🎈</span>Balloons</button>
+                <button type="button" class="captcha-tile" data-captcha="broccoli" aria-pressed="false"><span aria-hidden="true">🥦</span>Broccoli</button>
+                <button type="button" class="captcha-tile" data-captcha="candle" aria-pressed="false"><span aria-hidden="true">🕯️</span>Candle</button>
+                <button type="button" class="captcha-tile" data-captcha="spreadsheet" aria-pressed="false"><span aria-hidden="true">📊</span>Spreadsheet</button>
+                <button type="button" class="captcha-tile" data-captcha="gift" aria-pressed="false"><span aria-hidden="true">🎁</span>Gift</button>
+                <button type="button" class="captcha-tile" data-captcha="raccoon" aria-pressed="false"><span aria-hidden="true">🦝</span>Raccoon</button>
+                <button type="button" class="captcha-tile" data-captcha="saint" aria-pressed="false"><span aria-hidden="true">👑</span>Saint</button>
+                <button type="button" class="captcha-tile" data-captcha="taxes" aria-pressed="false"><span aria-hidden="true">🧾</span>Taxes</button>
+              </div>
+              <div class="bureau-action-row">
+                <button type="button" class="choice-button" id="captchaCheck">Check my extremely good answers</button>
+                <span id="captchaFeedback" class="bureau-feedback" role="status"></span>
+              </div>
+            </div>
+
+            <div class="bureau-step" data-step="5" hidden>
+              <span class="bureau-round">HIGH SECURITY PASSWORD</span>
+              <div class="stamp-mark stamp-purple" aria-hidden="true">✳</div>
+              <h2>Our password system is very advanced.</h2>
+              <p>We wrote <strong>PARTY</strong> backwards. Which password unlocks the next form? No typing. The Bureau finally listened.</p>
+              <div class="cake-answers">
+                <button type="button" class="choice-button choice-outline" data-password-answer="wrong">TRAPY</button>
+                <button type="button" class="choice-button choice-outline" data-password-answer="right">YTRAP</button>
+                <button type="button" class="choice-button choice-outline" data-password-answer="wrong">PARTY</button>
+                <button type="button" class="choice-button choice-outline" data-password-answer="wrong">YTRAY</button>
+              </div>
+              <span id="passwordFeedback" class="bureau-feedback" role="status"></span>
+            </div>
+
+            <div class="bureau-step" data-step="6" hidden>
+              <span class="bureau-round">TOTALLY FAIR MATH TEST</span>
+              <div class="stamp-mark stamp-yellow" aria-hidden="true">8</div>
+              <h2>Important cake math.</h2>
+              <p>A cake has eight slices. Saint takes two. How many slices does Saint <em>deserve</em>?</p>
+              <div class="cake-answers">
+                <button type="button" class="choice-button choice-outline" data-cake-answer="wrong">Two. Be reasonable.</button>
+                <button type="button" class="choice-button choice-outline" data-cake-answer="wrong">Six, if we negotiate.</button>
+                <button type="button" class="choice-button choice-outline" data-cake-answer="right">The entire cake.</button>
+              </div>
+              <span id="cakeFeedback" class="bureau-feedback" role="status"></span>
+            </div>
+
+            <div class="bureau-step" data-step="7" hidden>
+              <span class="bureau-round">FINAL FINAL FINAL TASK</span>
+              <div class="stamp-mark" aria-hidden="true">!</div>
+              <h2>Five stamps.<br>For no reason.</h2>
+              <p>The Bureau regrets to inform you that one stamp is insufficient. Tap five times. We lost the first four forms.</p>
+              <button type="button" class="stamp-button" id="stampButton">STAMP THE FORM <span id="stampCount">0 / 5</span></button>
+              <span id="stampStatus" class="bureau-feedback" role="status">Current status: unnecessarily pending.</span>
+            </div>
+
+            <div class="bureau-step" data-step="8" hidden>
+              <span class="bureau-round">APPLICATION APPROVED</span>
+              <div class="approved-stamp" aria-hidden="true">APPROVED<br><small>FINALLY</small></div>
+              <h2>Okay. We made that worse than it needed to be.</h2>
+              <p>Thank you for surviving our completely fake security process. The rest gets better. Mostly.</p>
+              <button type="button" class="primary-button" data-go="balloons">Enter Balloon Chaos <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <div class="bureau-foot"><span>FORM B-DAY-01</span><span>PROCESSING TIME: EMBARRASSING</span></div>
+        </div>
+      </div>
+      <div class="scene-bottom">
+        <span>THE OTHER TABS UNLOCK AFTER ALL EIGHT BUREAU TASKS.</span>
+        <span aria-hidden="true">✦ ✦ ✦</span>
+      </div>
+    </section>
+
+    <section class="tab-panel scene-balloons" id="panel-balloons" role="tabpanel" aria-labelledby="tab-balloons" tabindex="0" hidden>
+      <div class="scene-layout balloon-layout">
+        <div class="scene-copy">
+          <span class="eyebrow"><span class="eyebrow-dot">✳</span> CHAPTER 02 / BALLOON CHAOS</span>
+          <h1>Great. Now<br>pop <em>all of these.</em></h1>
+          <p>Five balloons. Five things I wanted to tell you. The first ones might be a little annoying. Keep going.</p>
+          <span class="mini-counter" id="balloonCounter" aria-live="polite">0 OF 5 POPPED</span>
+          <div class="balloon-wishes" id="balloonWishes">
+            <p class="empty-message" id="wishesEmpty">The tiny notes will land here as you pop them.</p>
+          </div>
+          <button type="button" class="primary-button next-button" id="balloonNext" data-go="gifts" hidden>Proceed to the Gift Desk <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="balloon-board">
+          <div class="board-head"><span>PLEASE HANDLE WITH ABSOLUTELY NO CARE</span><span>✷ ✷ ✷</span></div>
+          <div class="balloon-stage" id="balloonStage">
+            <button class="balloon balloon-one" type="button" data-wish="0" aria-label="Pop balloon one" style="--balloon:#ff6c73;--delay:0s">
+              <svg viewBox="0 0 130 190" aria-hidden="true"><path class="balloon-body" d="M65 5C29 5 12 34 12 67c0 39 29 68 53 86 24-18 53-47 53-86C118 34 101 5 65 5Z"/><path class="balloon-shine" d="M35 34c-8 9-12 20-12 33"/><path class="balloon-knot" d="m65 153-8 10h16z"/><path class="balloon-string" d="M65 163c12 10-8 18 2 27"/></svg>
+              <span>✦</span>
+            </button>
+            <button class="balloon balloon-two" type="button" data-wish="1" aria-label="Pop balloon two" style="--balloon:#f8cf58;--delay:-.7s">
+              <svg viewBox="0 0 130 190" aria-hidden="true"><path class="balloon-body" d="M65 5C29 5 12 34 12 67c0 39 29 68 53 86 24-18 53-47 53-86C118 34 101 5 65 5Z"/><path class="balloon-shine" d="M35 34c-8 9-12 20-12 33"/><path class="balloon-knot" d="m65 153-8 10h16z"/><path class="balloon-string" d="M65 163c12 10-8 18 2 27"/></svg>
+              <span>★</span>
+            </button>
+            <button class="balloon balloon-three" type="button" data-wish="2" aria-label="Pop balloon three" style="--balloon:#8b78ce;--delay:-1.1s">
+              <svg viewBox="0 0 130 190" aria-hidden="true"><path class="balloon-body" d="M65 5C29 5 12 34 12 67c0 39 29 68 53 86 24-18 53-47 53-86C118 34 101 5 65 5Z"/><path class="balloon-shine" d="M35 34c-8 9-12 20-12 33"/><path class="balloon-knot" d="m65 153-8 10h16z"/><path class="balloon-string" d="M65 163c12 10-8 18 2 27"/></svg>
+              <span>✳</span>
+            </button>
+            <button class="balloon balloon-four" type="button" data-wish="3" aria-label="Pop balloon four" style="--balloon:#68aaa3;--delay:-.35s">
+              <svg viewBox="0 0 130 190" aria-hidden="true"><path class="balloon-body" d="M65 5C29 5 12 34 12 67c0 39 29 68 53 86 24-18 53-47 53-86C118 34 101 5 65 5Z"/><path class="balloon-shine" d="M35 34c-8 9-12 20-12 33"/><path class="balloon-knot" d="m65 153-8 10h16z"/><path class="balloon-string" d="M65 163c12 10-8 18 2 27"/></svg>
+              <span>✦</span>
+            </button>
+            <button class="balloon balloon-five" type="button" data-wish="4" aria-label="Pop balloon five" style="--balloon:#ee88ae;--delay:-1.5s">
+              <svg viewBox="0 0 130 190" aria-hidden="true"><path class="balloon-body" d="M65 5C29 5 12 34 12 67c0 39 29 68 53 86 24-18 53-47 53-86C118 34 101 5 65 5Z"/><path class="balloon-shine" d="M35 34c-8 9-12 20-12 33"/><path class="balloon-knot" d="m65 153-8 10h16z"/><path class="balloon-string" d="M65 163c12 10-8 18 2 27"/></svg>
+              <span>♥</span>
+            </button>
+            <div class="balloon-complete" id="balloonComplete" hidden>
+              <span aria-hidden="true">✷</span>
+              <strong>Okay, that was impressive.</strong>
+              <small>And yes, the balloons forgive you.</small>
+            </div>
+          </div>
+          <div class="board-foot"><span id="boardHint">TAP ANY BALLOON TO START</span><span>SAINT'S PARTY DEPARTMENT</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel scene-gifts" id="panel-gifts" role="tabpanel" aria-labelledby="tab-gifts" tabindex="0" hidden>
+      <div class="scene-layout gift-layout">
+        <div class="scene-copy gift-copy">
+          <span class="eyebrow"><span class="eyebrow-dot">✳</span> CHAPTER 03 / GIFT DESK</span>
+          <h1>Three gifts.<br><em>Some assembly</em><br>of feelings required.</h1>
+          <p>No tracking number. No returns. Tap each parcel to see what’s inside.</p>
+          <span class="mini-counter" id="giftCounter" aria-live="polite">0 OF 3 OPENED</span>
+        </div>
+        <div class="gift-grid">
+          <button type="button" class="gift-card gift-one" data-gift="0" aria-expanded="false">
+            <span class="gift-top"><span>PARCEL 01</span><span>HANDLE WITH CARE-ish</span></span>
+            <span class="gift-icon" aria-hidden="true">✳</span>
+            <span class="gift-front"><strong>For your very important birthday business</strong><small>TAP TO UNWRAP</small></span>
+            <span class="gift-reveal"><strong>One official day off from being sensible.</strong><span>Have the extra slice. Play the song again. Do the small thing that makes you happy.</span><small>TAP TO FOLD BACK</small></span>
+          </button>
+          <button type="button" class="gift-card gift-two" data-gift="1" aria-expanded="false">
+            <span class="gift-top"><span>PARCEL 02</span><span>EXPRESS DELIVERY</span></span>
+            <span class="gift-icon" aria-hidden="true">★</span>
+            <span class="gift-front"><strong>A coupon of questionable value</strong><small>TAP TO UNWRAP</small></span>
+            <span class="gift-reveal"><strong>Unlimited good luck, no expiry date.</strong><span>For the plans you’re excited about, and the ones you’re brave enough to try.</span><small>TAP TO FOLD BACK</small></span>
+          </button>
+          <button type="button" class="gift-card gift-three" data-gift="2" aria-expanded="false">
+            <span class="gift-top"><span>PARCEL 03</span><span>THE REAL ONE</span></span>
+            <span class="gift-icon" aria-hidden="true">♥</span>
+            <span class="gift-front"><strong>Something I hope you keep</strong><small>TAP TO UNWRAP</small></span>
+            <span class="gift-reveal"><strong>You are so easy to celebrate, Saint.</strong><span>There are people who are genuinely glad they get to know you. I’m one of them.</span><small>TAP TO FOLD BACK</small></span>
+          </button>
+        </div>
+      </div>
+      <div class="gift-end" id="giftEnd" hidden>
+        <span>THE GIFT DESK IS OFFICIALLY CLOSED.</span>
+        <button type="button" class="primary-button" data-go="quiet">Find the Quiet Corner <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
+
+    <section class="tab-panel scene-quiet" id="panel-quiet" role="tabpanel" aria-labelledby="tab-quiet" tabindex="0" hidden>
+      <div class="quiet-intro">
+        <span class="eyebrow"><span class="eyebrow-dot">✳</span> CHAPTER 04 / QUIET CORNER</span>
+        <h1>Okay. The teasing<br>can <em>rest now.</em></h1>
+        <p>There are a few little reminders here for the days after your birthday, too. Take your time with them.</p>
+      </div>
+      <div class="quiet-grid">
+        <div class="note-column">
+          <h2>Open when...</h2>
+          <div class="pocket-list">
+            <button type="button" class="pocket-card" aria-expanded="false">
+              <span class="pocket-heading"><span>01 / A HARD DAY</span><span>✳</span></span>
+              <strong>you need a breather</strong>
+              <span class="pocket-note">One difficult day cannot tell you everything about your life. You’re allowed to pause, to ask for help, and to begin again tomorrow. I hope you give yourself the same kindness you give others.</span>
+              <small>Tap to open</small>
+            </button>
+            <button type="button" class="pocket-card" aria-expanded="false">
+              <span class="pocket-heading"><span>02 / A SILLY DAY</span><span>★</span></span>
+              <strong>you need a laugh</strong>
+              <span class="pocket-note">I made you deal with birthday paperwork and commit balloon crimes. You handled both with remarkable grace. Your certificate of excellence is imaginary, but my admiration is real.</span>
+              <small>Tap to open</small>
+            </button>
+            <button type="button" class="pocket-card" aria-expanded="false">
+              <span class="pocket-heading"><span>03 / ANY DAY</span><span>♥</span></span>
+              <strong>you need a reminder</strong>
+              <span class="pocket-note">You don’t have to do anything extraordinary to deserve love and care. You matter as you are, on the loud days and the quiet ones.</span>
+              <small>Tap to open</small>
+            </button>
+          </div>
+        </div>
+        <div class="candle-column">
+          <span class="small-label">BEFORE YOU GO</span>
+          <h2>Make a wish.<br><em>Keep it yours.</em></h2>
+          <p>Tap the candle when you’re ready. No pressure to tell anyone what you wished for.</p>
+          <button type="button" class="cake-button" id="cakeButton" aria-label="Blow out the birthday candle">
+            <svg viewBox="0 0 290 290" role="img" aria-label="Birthday cake with one lit candle">
+              <ellipse class="cake-shadow" cx="145" cy="255" rx="112" ry="20"/>
+              <rect class="cake-layer" x="56" y="147" width="178" height="94" rx="16"/>
+              <path class="cake-icing" d="M56 162q0-18 18-18h142q18 0 18 18v13q-10 14-20 0-12 23-26 2-10 22-23 1-13 18-25 0-12 21-27 0-12 19-25 1-13 17-32-2z"/>
+              <path class="cake-stripe" d="M80 201h130 M80 219h130"/>
+              <rect class="candle" x="138" y="91" width="14" height="55" rx="3"/>
+              <path class="candle-flame" d="M145 84c-13-14-2-28 3-36 0 14 11 24 5 34-2 4-5 7-8 7-3 0-5-2-5-5z"/>
+              <path class="wick" d="M145 91v-7"/>
+            </svg>
+            <span id="cakeLabel">TAP TO BLOW IT OUT</span>
+          </button>
+          <p class="candle-result" id="candleResult" aria-live="polite"></p>
+          <button type="button" class="link-button replay-celebration" id="replayCelebration" hidden>See the birthday surprise again ↗</button>
+        </div>
+      </div>
+      <div class="quiet-next">
+        <button type="button" class="primary-button" data-go="letter">There’s one more note <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
+
+    <section class="tab-panel scene-letter" id="panel-letter" role="tabpanel" aria-labelledby="tab-letter" tabindex="0" hidden>
+      <div class="scene-layout letter-layout">
+        <div class="scene-copy">
+          <span class="eyebrow"><span class="eyebrow-dot">✳</span> CHAPTER 05 / THE LETTER</span>
+          <h1>For Saint,<br><em>properly this time.</em></h1>
+          <p>I know I’ve made a whole game out of this. The real reason is simpler: I wanted to give you a little place you can come back to.</p>
+        </div>
+        <div class="letter-area">
+          <div class="letter-locked" id="letterLocked">
+            <span class="letter-label">DELIVERY STATUS / ALMOST THERE</span>
+            <span class="letter-lock-icon" aria-hidden="true">✉</span>
+            <h2>One last piece is waiting.</h2>
+            <p>Finish the Bureau, pop the balloons, and unwrap the three gifts. Then this one is yours.</p>
+            <div class="letter-checklist">
+              <button type="button" data-go="bureau" id="checkBureau"><span>01</span> Birthday clearance <b>GO</b></button>
+              <button type="button" data-go="balloons" id="checkBalloons"><span>02</span> Five balloons <b>GO</b></button>
+              <button type="button" data-go="gifts" id="checkGifts"><span>03</span> Three gifts <b>GO</b></button>
+            </div>
+          </div>
+          <div class="letter-envelope" id="letterEnvelope" hidden>
+            <div class="envelope-top">
+              <span>TO: SAINT<br>FROM: YOUR VERY ANNOYING FRIEND</span>
+              <span>PERSONAL DELIVERY ✳</span>
+            </div>
+            <span class="envelope-seal" aria-hidden="true">S</span>
+            <div class="envelope-bottom">
+              <span>THIS ONE IS ACTUALLY IMPORTANT.</span>
+              <button type="button" class="primary-button light-button" id="openLetter">Open your letter <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <article class="letter-paper" id="letterPaper" hidden>
+            <span class="letter-label">A REAL NOTE, AT LAST ✳</span>
+            <h2 tabindex="-1">Dear Saint,</h2>
+            <p>Happy birthday. Yes, I know I made you answer ridiculous questions, pop five balloons, and open a bunch of pretend presents just to get here. I could have simply said this at the start. But I wanted you to have something that felt like a little adventure, because celebrating you deserved more than a passing message.</p>
+            <p>Behind all the jokes, I hope you know how glad I am that you’re here. I hope this year gives you the kind of laughter that stays with you, people who make room for all of you, and quiet moments when you can feel proud of how far you’ve come. I hope good things find you in ways you didn’t expect.</p>
+            <p>On the days that feel less bright, please remember you don’t have to earn your place in anyone’s life by always being okay. You are worth caring for on the easy days and the difficult ones. I’m lucky to call you my friend.</p>
+            <p>So today, eat something you love, make a wish you keep to yourself, and let yourself be celebrated. Happy birthday, Saint. I’m really glad we get to share this little part of life.</p>
+            <p class="letter-signature">Love,<br><span>your very annoying friend ♡</span></p>
+            <div class="letter-actions">
+              <button type="button" class="link-button" id="confettiAgain">One more confetti burst</button>
+              <button type="button" class="link-button" data-go="quiet">Visit the quiet corner</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="celebration-dialog" id="celebrationDialog" aria-labelledby="celebrationTitle" aria-describedby="celebrationMessage">
+    <div class="celebration-panel">
+      <div class="celebration-top">
+        <span>OFFICIAL BIRTHDAY SURPRISE / 01</span>
+        <button type="button" class="celebration-close" id="closeCelebration" aria-label="Close birthday surprise">×</button>
+      </div>
+      <span class="celebration-kicker">FROM ALL THREE OF US ✳</span>
+      <h2 id="celebrationTitle">Happy birthday,<br><em>Pat!</em></h2>
+      <div class="celebration-stage" role="group" aria-label="Animated 2D birthday party with three friends">
+        <div class="game-stars" aria-hidden="true">✦ <span>✳</span> ✦</div>
+        <div class="game-floor" aria-hidden="true"></div>
+        <div class="game-crew">
+          <button type="button" class="game-sprite sprite-left" data-cheer="confetti" aria-label="Make the brown-haired friend dance and toss confetti">
+            <img src="sprite-brown-hair.png" alt="">
+          </button>
+          <button type="button" class="game-sprite sprite-center" data-cheer="cake" aria-label="Make the beige-shirt friend present the cake">
+            <img src="sprite-cake-holder.png" alt="">
+          </button>
+          <button type="button" class="game-sprite sprite-right" data-cheer="cheer" aria-label="Make the friend with glasses cheer">
+            <img src="sprite-glasses.png" alt="">
+          </button>
+        </div>
+        <div class="celebration-confetti" id="celebrationConfetti" aria-hidden="true"></div>
+      </div>
+      <span class="game-cheer-status" id="gameCheerStatus" role="status">Tap a friend to make them cheer!</span>
+      <p id="celebrationMessage">Surprise! Your birthday crew showed up with cake, confetti, and a whole lot of love. We’re so glad we get to celebrate you. ♡</p>
+      <audio id="birthdaySong" src="birthday-song.mp3" preload="auto"></audio>
+      <div class="celebration-actions">
+        <button type="button" class="song-toggle" id="songToggle" aria-label="Play birthday song" aria-pressed="false">♫ Play birthday song</button>
+        <button type="button" class="primary-button celebration-continue" id="continueCelebration">Keep celebrating <span aria-hidden="true">↗</span></button>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <span>HAPPY BIRTHDAY, SAINT ✳</span>
+    <span>MADE WITH LOVE, NONSENSE, AND MANY BALLOONS.</span>
+    <button type="button" id="topButton">BACK TO TOP ↑</button>
+  </footer>
+  <p class="screen-reader-only" id="announcer" aria-live="polite"></p>
+</body>
+</html>
